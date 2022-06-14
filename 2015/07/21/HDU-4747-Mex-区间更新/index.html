@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>HDU 4747 Mex 区间更新 | CHC's Blog</title><meta name="keywords" content="线段树,区间更新,区间最值,区间求和"><meta name="author" content="CHC,chenhuachaoxyz@gmail.com"><meta name="copyright" content="CHC"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="题意：给一个长度为n的数组a[n]，然后定义mex[l,r]为[l,r]这个区间内最小的非负整数，然后求sum(mex[l,r])(1&lt;&#x3D;l&lt;&#x3D;r&lt;&#x3D;n) 先求出mex[1,1]~mex[1,n]的值，然后枚举删掉a[i]后的变化 首先可以知道mex[1,1]~mex[1,n]为非递减的 如果删掉a[1]，那么mex[2,2]~mex[2,n]的变化为，下一个a[1]出现前大于a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDU 4747 Mex 区间更新">
+<meta property="og:url" content="https://chchc.me/2015/07/21/HDU-4747-Mex-%E5%8C%BA%E9%97%B4%E6%9B%B4%E6%96%B0/index.html">
+<meta property="og:site_name" content="CHC&#39;s Blog">
+<meta property="og:description" content="题意：给一个长度为n的数组a[n]，然后定义mex[l,r]为[l,r]这个区间内最小的非负整数，然后求sum(mex[l,r])(1&lt;&#x3D;l&lt;&#x3D;r&lt;&#x3D;n) 先求出mex[1,1]~mex[1,n]的值，然后枚举删掉a[i]后的变化 首先可以知道mex[1,1]~mex[1,n]为非递减的 如果删掉a[1]，那么mex[2,2]~mex[2,n]的变化为，下一个a[1]出现前大于a">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<meta property="article:published_time" content="2015-07-21T02:46:34.000Z">
+<meta property="article:modified_time" content="2015-07-21T02:46:34.000Z">
+<meta property="article:author" content="CHC">
+<meta property="article:tag" content="线段树">
+<meta property="article:tag" content="区间更新">
+<meta property="article:tag" content="区间最值">
+<meta property="article:tag" content="区间求和">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://chchc.me/2015/07/21/HDU-4747-Mex-%E5%8C%BA%E9%97%B4%E6%9B%B4%E6%96%B0/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><link rel="apple-touch-icon" sizes="180x180" href="/pwa/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="32x32" href="/images/pwa/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/images/pwa/16.png"/><link rel="mask-icon" href="/pwa/safari-pinned-tab.svg" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/third/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":180},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HDU 4747 Mex 区间更新',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2015-07-21 10:46:34'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><style type="text/css">.app-refresh{position:fixed;top:-2.2rem;left:0;right:0;z-index:99999;padding:0 1rem;font-size:15px;height:2.2rem;transition:all .3s ease}.app-refresh-wrap{display:flex;color:#fff;height:100%;align-items:center;justify-content:center}.app-refresh-wrap a{color:#fff;text-decoration:underline;cursor:pointer}</style><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/pwa/192.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">213</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">76</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">CHC's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">HDU 4747 Mex 区间更新</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2015-07-21T02:46:34.000Z" title="发表于 2015-07-21 10:46:34">2015-07-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2015-07-21T02:46:34.000Z" title="更新于 2015-07-21 10:46:34">2015-07-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/">数据结构</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%BA%BF%E6%AE%B5%E6%A0%91/">线段树</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HDU 4747 Mex 区间更新"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><p>题意：给一个长度为n的数组a[n]，然后定义mex[l,r]为[l,r]这个区间内最小的非负整数，然后求sum(mex[l,r])(1&lt;=l&lt;=r&lt;=n)</p>
+<p>先求出mex[1,1]~mex[1,n]的值，然后枚举删掉a[i]后的变化<br />
+首先可以知道mex[1,1]~mex[1,n]为非递减的<br />
+如果删掉a[1]，那么mex[2,2]~mex[2,n]的变化为，下一个a[1]出现前大于a[1]的都要变为a[1]，又因为其是非递减的，所以可以找到第一个mex值大于a[i]的那个位置到下一个出现a[1]的位置之前的这段区间赋值为a[1]，然后线段树求和就行了。</p>
+<span id="more"></span>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//author: CHC</span></span><br><span class="line"><span class="comment">//First Edit Time:	2015-07-20 21:09</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;limits&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="keyword">typedef</span> <span class="type">long</span> <span class="type">long</span> LL;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> MAXN=<span class="number">200000</span>+<span class="number">1000</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> INF = numeric_limits&lt;<span class="type">int</span>&gt;::<span class="built_in">max</span>();</span><br><span class="line"><span class="type">const</span> LL LL_INF= numeric_limits&lt;LL&gt;::<span class="built_in">max</span>();</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> lson L,mid,rt&lt;&lt;1</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> rson mid+1,R,rt&lt;&lt;1|1</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Tree</span> &#123;</span><br><span class="line">    LL sum;</span><br><span class="line">    LL Ma;</span><br><span class="line">    <span class="type">int</span> flag;</span><br><span class="line">    LL v;</span><br><span class="line">&#125;tr[MAXN&lt;&lt;<span class="number">2</span>];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pushup</span><span class="params">(<span class="type">int</span> rt)</span></span>&#123;</span><br><span class="line">    tr[rt].sum=tr[rt&lt;&lt;<span class="number">1</span>].sum+tr[rt&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].sum;</span><br><span class="line">    tr[rt].Ma=<span class="built_in">max</span>(tr[rt&lt;&lt;<span class="number">1</span>].Ma,tr[rt&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].Ma);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">pushdown</span><span class="params">(<span class="type">int</span> L,<span class="type">int</span> R,<span class="type">int</span> rt)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(L==R)<span class="keyword">return</span> ;</span><br><span class="line">    <span class="type">int</span> mid=(L+R)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(tr[rt].flag)&#123;</span><br><span class="line">        tr[rt&lt;&lt;<span class="number">1</span>].sum=(L-mid+<span class="number">1</span>)*tr[rt].v;</span><br><span class="line">        tr[rt&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].sum=(R-(mid+<span class="number">1</span>)+<span class="number">1</span>)*tr[rt].v;</span><br><span class="line">        tr[rt&lt;&lt;<span class="number">1</span>].v=tr[rt&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].v=tr[rt].v;</span><br><span class="line">        tr[rt&lt;&lt;<span class="number">1</span>].Ma=tr[rt&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].Ma=tr[rt].v;</span><br><span class="line">        tr[rt&lt;&lt;<span class="number">1</span>].flag=tr[rt&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].flag=<span class="number">1</span>;</span><br><span class="line">        tr[rt].flag=<span class="number">0</span>;</span><br><span class="line">        tr[rt].v=<span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">LL A[MAXN];</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">build</span><span class="params">(<span class="type">int</span> L,<span class="type">int</span> R,<span class="type">int</span> rt)</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(&amp;tr[rt],<span class="number">0</span>,<span class="built_in">sizeof</span>(Tree));</span><br><span class="line">    <span class="keyword">if</span>(L==R)&#123;</span><br><span class="line">        tr[rt].sum=A[L];</span><br><span class="line">        tr[rt].Ma=A[L];</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> mid=(L+R)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="built_in">build</span>(lson);<span class="built_in">build</span>(rson);</span><br><span class="line">    <span class="built_in">pushup</span>(rt);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">update</span><span class="params">(<span class="type">int</span> L,<span class="type">int</span> R,<span class="type">int</span> rt,<span class="type">int</span> l,<span class="type">int</span> r,LL v)</span></span>&#123;</span><br><span class="line">    <span class="built_in">pushdown</span>(L,R,rt);</span><br><span class="line">    <span class="keyword">if</span>(l&lt;=L&amp;&amp;R&lt;=r)&#123;</span><br><span class="line">        tr[rt].sum=v*(R-L+<span class="number">1</span>);</span><br><span class="line">        tr[rt].v=v;</span><br><span class="line">        tr[rt].Ma=v;</span><br><span class="line">        tr[rt].flag=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">return</span> ;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> mid=(L+R)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(l&lt;=mid)<span class="built_in">update</span>(lson,l,r,v);</span><br><span class="line">    <span class="keyword">if</span>(r&gt;mid)<span class="built_in">update</span>(rson,l,r,v);</span><br><span class="line">    <span class="built_in">pushup</span>(rt);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LL <span class="title">query</span><span class="params">(<span class="type">int</span> L,<span class="type">int</span> R,<span class="type">int</span> rt,<span class="type">int</span> l,<span class="type">int</span> r,<span class="type">int</span> flag)</span></span>&#123;</span><br><span class="line">    <span class="comment">//printf(&quot;%d %d %d %d %d\n&quot;,L,R,rt,l,r);</span></span><br><span class="line">    <span class="comment">//system(&quot;pause&quot;);</span></span><br><span class="line">    <span class="built_in">pushdown</span>(L,R,rt);</span><br><span class="line">    <span class="keyword">if</span>(l&lt;=L&amp;&amp;R&lt;=r)&#123;</span><br><span class="line">        <span class="comment">//printf(&quot;%d %d %I64d\n&quot;,L,R,tr[rt].sum);</span></span><br><span class="line">        <span class="keyword">if</span>(flag==<span class="number">0</span>)<span class="keyword">return</span> tr[rt].Ma;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> tr[rt].sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> mid=(L+R)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    LL ans=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(l&lt;=mid)&#123;</span><br><span class="line">        <span class="keyword">if</span>(flag==<span class="number">0</span>)ans=<span class="built_in">max</span>(ans,<span class="built_in">query</span>(lson,l,r,flag));</span><br><span class="line">        <span class="keyword">else</span> ans+=<span class="built_in">query</span>(lson,l,r,flag);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(r&gt;mid)&#123;</span><br><span class="line">        <span class="keyword">if</span>(flag==<span class="number">0</span>)ans=<span class="built_in">max</span>(ans,<span class="built_in">query</span>(rson,l,r,flag));</span><br><span class="line">        <span class="keyword">else</span> ans+=<span class="built_in">query</span>(rson,l,r,flag);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">pushup</span>(rt);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">int</span> resl,resr;</span><br><span class="line"><span class="function">LL <span class="title">queryp</span><span class="params">(<span class="type">int</span> L,<span class="type">int</span> R,<span class="type">int</span> rt,<span class="type">int</span> l,<span class="type">int</span> r,LL v)</span></span>&#123;</span><br><span class="line">    <span class="comment">//printf(&quot;%d %d %I64d\n&quot;,L,R,tr[rt].Ma);</span></span><br><span class="line">    <span class="built_in">pushdown</span>(L,R,rt);</span><br><span class="line">    <span class="type">int</span> mid=(L+R)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(l&lt;=L&amp;&amp;R&lt;=r)&#123;</span><br><span class="line">        <span class="keyword">if</span>(tr[rt].Ma&lt;=v)<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="keyword">if</span>(L==R)<span class="keyword">return</span> L;</span><br><span class="line">        <span class="keyword">if</span>(resl!=<span class="number">-1</span>&amp;&amp;(resr&lt;L))<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        resl=L;resr=R;</span><br><span class="line">        <span class="keyword">if</span>(tr[rt&lt;&lt;<span class="number">1</span>].Ma&gt;v)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">queryp</span>(lson,l,r,v);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> <span class="built_in">queryp</span>(rson,l,r,v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="type">int</span> ansl=<span class="number">-1</span>,ansr=<span class="number">-1</span>;</span><br><span class="line">    <span class="keyword">if</span>(l&lt;=mid)ansl=<span class="built_in">queryp</span>(lson,l,r,v);</span><br><span class="line">    <span class="keyword">if</span>(r&gt;mid)ansr=<span class="built_in">queryp</span>(rson,l,r,v);</span><br><span class="line">    <span class="keyword">if</span>(ansl==<span class="number">-1</span>)<span class="keyword">return</span> ansr;</span><br><span class="line">    <span class="keyword">if</span>(ansr==<span class="number">-1</span>)<span class="keyword">return</span> ansl;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">min</span>(ansl,ansr);</span><br><span class="line">&#125;</span><br><span class="line">LL B[MAXN];</span><br><span class="line"><span class="type">int</span> n;</span><br><span class="line"><span class="type">int</span> pre[MAXN],vis[MAXN];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">node</span> &#123;</span><br><span class="line">    LL val;</span><br><span class="line">    <span class="type">int</span> pos;</span><br><span class="line">&#125;cs[MAXN];</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">cmp</span><span class="params">(<span class="type">const</span> node &amp;x,<span class="type">const</span> node &amp;y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x.val!=y.val)<span class="keyword">return</span> x.val&lt;y.val;</span><br><span class="line">    <span class="keyword">return</span> x.pos&lt;y.pos;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(~<span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;n))&#123;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)<span class="keyword">break</span>;</span><br><span class="line">        <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="built_in">sizeof</span>(vis));</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)<span class="built_in">scanf</span>(<span class="string">&quot;%I64d&quot;</span>,&amp;B[i]);</span><br><span class="line">        LL s=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(B[i]&lt;=n)vis[B[i]]=<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">while</span>(vis[s])++s;</span><br><span class="line">            A[i]=s;</span><br><span class="line">            <span class="comment">//printf(&quot;%I64d &quot;,A[i]);</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//puts(&quot;&quot;);</span></span><br><span class="line">        <span class="built_in">memset</span>(pre,<span class="number">-1</span>,<span class="built_in">sizeof</span>(pre));</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=n;i++)cs[i].val=B[i],cs[i].pos=i;</span><br><span class="line">        <span class="built_in">sort</span>(cs+<span class="number">1</span>,cs+<span class="number">1</span>+n,cmp);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(cs[i].val==cs[i+<span class="number">1</span>].val)pre[cs[i].pos]=cs[i+<span class="number">1</span>].pos;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//for(int i=1;i&lt;=n;i++)printf(&quot;%d &quot;,pre[i]);</span></span><br><span class="line">        <span class="comment">//puts(&quot;&quot;);</span></span><br><span class="line">        <span class="built_in">build</span>(<span class="number">1</span>,n,<span class="number">1</span>);</span><br><span class="line">        LL ans=<span class="built_in">query</span>(<span class="number">1</span>,n,<span class="number">1</span>,<span class="number">1</span>,n,<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">2</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            resl=resr=<span class="number">-1</span>;</span><br><span class="line">            <span class="type">int</span> pos1=<span class="built_in">queryp</span>(<span class="number">1</span>,n,<span class="number">1</span>,i,n,B[i<span class="number">-1</span>]);</span><br><span class="line">            <span class="type">int</span> pos2=pre[i<span class="number">-1</span>];</span><br><span class="line">            <span class="keyword">if</span>(pos1!=<span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="keyword">if</span>(pos2==<span class="number">-1</span>)&#123;</span><br><span class="line">                    <span class="built_in">update</span>(<span class="number">1</span>,n,<span class="number">1</span>,pos1,n,B[i<span class="number">-1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="built_in">update</span>(<span class="number">1</span>,n,<span class="number">1</span>,pos1,pos2<span class="number">-1</span>,B[i<span class="number">-1</span>]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ans+=<span class="built_in">query</span>(<span class="number">1</span>,n,<span class="number">1</span>,i,n,<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%I64d\n&quot;</span>,ans);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chchc.me">CHC</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chchc.me/2015/07/21/HDU-4747-Mex-%E5%8C%BA%E9%97%B4%E6%9B%B4%E6%96%B0/">https://chchc.me/2015/07/21/HDU-4747-Mex-区间更新/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chchc.me" target="_blank">CHC's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BA%BF%E6%AE%B5%E6%A0%91/">线段树</a><a class="post-meta__tags" href="/tags/%E5%8C%BA%E9%97%B4%E6%9B%B4%E6%96%B0/">区间更新</a><a class="post-meta__tags" href="/tags/%E5%8C%BA%E9%97%B4%E6%9C%80%E5%80%BC/">区间最值</a><a class="post-meta__tags" href="/tags/%E5%8C%BA%E9%97%B4%E6%B1%82%E5%92%8C/">区间求和</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2015/07/20/FZU-2105-Digits-Count-%E5%8C%BA%E9%97%B4%E6%9B%B4%E6%96%B0/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">FZU 2105 Digits Count 区间更新</div></div></a></div><div class="next-post pull-right"><a href="/2015/07/24/BestCoder-Round-48--hdu-5284%E3%80%81hdu-5285-/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">BestCoder Round 48 (hdu 5284、hdu 5285)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2015/07/20/FZU-2105-Digits-Count-%E5%8C%BA%E9%97%B4%E6%9B%B4%E6%96%B0/" title="FZU 2105 Digits Count 区间更新"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2015-07-20</div><div class="title">FZU 2105 Digits Count 区间更新</div></div></a></div><div><a href="/2015/07/15/uva-12436-Rip-Van-Winkle-s-Code-%E5%8C%BA%E9%97%B4%E6%9B%B4%E6%96%B0%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2/" title="uva 12436 Rip Van Winkle&#39;s Code 区间更新区间查询"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2015-07-15</div><div class="title">uva 12436 Rip Van Winkle&#39;s Code 区间更新区间查询</div></div></a></div><div><a href="/2016/03/06/CF-344-Div--2/" title="CF 344 Div. 2"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2016-03-06</div><div class="title">CF 344 Div. 2</div></div></a></div><div><a href="/2015/03/31/HDU-3950-Parking-Log-%E4%B8%A4%E9%A2%97%E7%BA%BF%E6%AE%B5%E6%A0%91/" title="HDU 3950 Parking Log 两颗线段树"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2015-03-31</div><div class="title">HDU 3950 Parking Log 两颗线段树</div></div></a></div><div><a href="/2015/09/22/HDU-5458-Stability-%E6%A0%91%E9%93%BE%E5%89%96%E5%88%86/" title="HDU 5458 Stability 树链剖分"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2015-09-22</div><div class="title">HDU 5458 Stability 树链剖分</div></div></a></div><div><a href="/2015/06/06/HYSBZ-1146-%E7%BD%91%E7%BB%9C%E7%AE%A1%E7%90%86Network----Treap+%E7%BA%BF%E6%AE%B5%E6%A0%91+%E6%A0%91%E9%93%BE/" title="HYSBZ 1146 网络管理Network    Treap+线段树+树链"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2015-06-06</div><div class="title">HYSBZ 1146 网络管理Network    Treap+线段树+树链</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/pwa/192.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CHC</div><div class="author-info__description">『Everything is Possible. But Not Everything is Possible』</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">213</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">76</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CHENXCHEN"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CHENXCHEN" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:chenhuachaoxyz@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2017/07/27/hexo-renderer-markdown-it-plus-plugin-demo/" title="hexo-renderer-markdown-it-plus plugin demo">hexo-renderer-markdown-it-plus plugin demo</a><time datetime="2017-07-27T03:54:13.000Z" title="发表于 2017-07-27 11:54:13">2017-07-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2016/07/30/CF-Educational-Codeforces-Round-15/" title="CF Educational Codeforces Round 15">CF Educational Codeforces Round 15</a><time datetime="2016-07-30T12:46:34.000Z" title="发表于 2016-07-30 20:46:34">2016-07-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2016/07/29/HTTPS-%E4%BD%BF%E7%94%A8letsencrypt%E6%90%AD%E5%BB%BASSL%E8%AF%81%E4%B9%A6/" title="[HTTPS]使用letsencrypt搭建SSL证书">[HTTPS]使用letsencrypt搭建SSL证书</a><time datetime="2016-07-29T13:04:07.000Z" title="发表于 2016-07-29 21:04:07">2016-07-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2016/06/23/CentOS7-%E6%90%AD%E5%BB%BAOpenVPN/" title="CentOS7 搭建OpenVPN">CentOS7 搭建OpenVPN</a><time datetime="2016-06-23T15:23:37.000Z" title="发表于 2016-06-23 23:23:37">2016-06-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2016/06/09/%E7%BC%96%E8%AF%91USB%E6%97%A0%E7%BA%BF%E9%A9%B1%E5%8A%A88192cu/" title="编译USB无线驱动8192cu">编译USB无线驱动8192cu</a><time datetime="2016-06-08T23:09:15.000Z" title="发表于 2016-06-09 07:09:15">2016-06-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By CHC</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly@4.2.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly@4.2.2/source/js/main.min.js"></script><script src="/third/fancybox/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'oXOywY5bYG0tHJJ4HsoSNTLR-9Nh9j0Va',
+      appKey: 'ghcCRgDlXaRHA2F6jiqeJ5yS',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://chchc.me/2015/07/21/HDU-4747-Mex-%E5%8C%BA%E9%97%B4%E6%9B%B4%E6%96%B0/'
+    this.page.identifier = '2015/07/21/HDU-4747-Mex-区间更新/'
+    this.page.title = 'HDU 4747 Mex 区间更新'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chchc.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><div class="app-refresh" id="app-refresh"> <div class="app-refresh-wrap"> <label>✨ 网站已更新最新版本 👉</label> <a href="javascript:void(0)" onclick="location.reload()">点击刷新</a> </div></div><script>function showNotification(){if(GLOBAL_CONFIG.Snackbar){var t="light"===document.documentElement.getAttribute("data-theme")?GLOBAL_CONFIG.Snackbar.bgLight:GLOBAL_CONFIG.Snackbar.bgDark,e=GLOBAL_CONFIG.Snackbar.position;Snackbar.show({text:"已更新最新版本",backgroundColor:t,duration:5e5,pos:e,actionText:"点击刷新",actionTextColor:"#fff",onActionClick:function(t){location.reload()}})}else{var o=`top: 0; background: ${"light"===document.documentElement.getAttribute("data-theme")?"#49b1f5":"#1f1f1f"};`;document.getElementById("app-refresh").style.cssText=o}}"serviceWorker"in navigator&&(navigator.serviceWorker.controller&&navigator.serviceWorker.addEventListener("controllerchange",function(){showNotification()}),window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js")}));</script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

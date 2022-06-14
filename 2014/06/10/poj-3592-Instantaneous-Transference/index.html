@@ -1,0 +1,262 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"><title>poj 3592 Instantaneous Transference | CHC's Blog</title><meta name="keywords" content="搜索,图论,强连通,缩点"><meta name="author" content="CHC,chenhuachaoxyz@gmail.com"><meta name="copyright" content="CHC"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="这道题的题意为： 给你一个nm的地图 这个地图中有三种格式  第一种 &#39;’ 代表这个地方可以使用魔法跳转到另一个地方（后面告诉）。 第二种 ‘0’~‘9’ 代表这个地方可以得到的矿石数量。 第三种 ‘#’   代表这个地方是墙 不能通过。 然后再给你每一个’*&#39;可以跳转到的地方 从左到右 从上到下 一次给出 起点为 左上角 每一个方格 可以向下或者向右走  然后让你求 这个地图中 最多能得到多少矿">
+<meta property="og:type" content="article">
+<meta property="og:title" content="poj 3592 Instantaneous Transference">
+<meta property="og:url" content="https://chchc.me/2014/06/10/poj-3592-Instantaneous-Transference/index.html">
+<meta property="og:site_name" content="CHC&#39;s Blog">
+<meta property="og:description" content="这道题的题意为： 给你一个nm的地图 这个地图中有三种格式  第一种 &#39;’ 代表这个地方可以使用魔法跳转到另一个地方（后面告诉）。 第二种 ‘0’~‘9’ 代表这个地方可以得到的矿石数量。 第三种 ‘#’   代表这个地方是墙 不能通过。 然后再给你每一个’*&#39;可以跳转到的地方 从左到右 从上到下 一次给出 起点为 左上角 每一个方格 可以向下或者向右走  然后让你求 这个地图中 最多能得到多少矿">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7">
+<meta property="article:published_time" content="2014-06-10T01:34:55.000Z">
+<meta property="article:modified_time" content="2014-06-10T01:34:55.000Z">
+<meta property="article:author" content="CHC">
+<meta property="article:tag" content="搜索">
+<meta property="article:tag" content="图论">
+<meta property="article:tag" content="强连通">
+<meta property="article:tag" content="缩点">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://chchc.me/2014/06/10/poj-3592-Instantaneous-Transference/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="manifest" href="/manifest.json"/><link rel="apple-touch-icon" sizes="180x180" href="/pwa/apple-touch-icon.png"/><link rel="icon" type="image/png" sizes="32x32" href="/images/pwa/32.png"/><link rel="icon" type="image/png" sizes="16x16" href="/images/pwa/16.png"/><link rel="mask-icon" href="/pwa/safari-pinned-tab.svg" color="#5bbad5"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/third/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"距离上次更新已经","messageNext":"天了，文章内容可能已经过时"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":180},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: true,
+    post: true
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery@2/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'poj 3592 Instantaneous Transference',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2014-06-10 09:34:55'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><style type="text/css">.app-refresh{position:fixed;top:-2.2rem;left:0;right:0;z-index:99999;padding:0 1rem;font-size:15px;height:2.2rem;transition:all .3s ease}.app-refresh-wrap{display:flex;color:#fff;height:100%;align-items:center;justify-content:center}.app-refresh-wrap a{color:#fff;text-decoration:underline;cursor:pointer}</style><meta name="generator" content="Hexo 6.2.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/images/pwa/192.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">213</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">76</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">CHC's Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout" id="content-inner"><div id="post"><div id="post-info"><h1 class="post-title">poj 3592 Instantaneous Transference</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2014-06-10T01:34:55.000Z" title="发表于 2014-06-10 09:34:55">2014-06-10</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2014-06-10T01:34:55.000Z" title="更新于 2014-06-10 09:34:55">2014-06-10</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E8%AE%BA/">图论</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/%E6%90%9C%E7%B4%A2/">搜索</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E8%AE%BA/%E8%BF%9E%E9%80%9A%E6%80%A7/">连通性</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%AE%97%E6%B3%95/%E5%9B%BE%E8%AE%BA/%E8%BF%9E%E9%80%9A%E6%80%A7/%E5%BC%BA%E8%BF%9E%E9%80%9A/">强连通</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">979</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="poj 3592 Instantaneous Transference"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div><article class="post-content" id="article-container"><p>这道题的题意为：<br />
+给你一个n<em>m的地图 这个地图中有三种格式 <br />
+第一种 '</em>’ 代表这个地方可以使用魔法跳转到另一个地方（后面告诉）。<br />
+第二种 ‘0’~‘9’<br />
+代表这个地方可以得到的矿石数量。<br />
+第三种 ‘#’  <br />
+代表这个地方是墙 不能通过。<br />
+然后再给你每一个’*'可以跳转到的地方 从左到右 从上到下 一次给出<br />
+起点为 左上角 每一个方格 可以向下或者向右走 <br />
+然后让你求 这个地图中 最多能得到多少矿石（起点为左上角，终点任意）（魔法可以无限次用 但是 每个方格的矿石只能得到一次）<br />
+输出这个答案。</p>
+<p>我的做法：<br />
+spfa+缩点 缩点可以用tarjan强连通算法。<br />
+如果可以施展魔法跳到另一个的地方之后。 如果能从那个地方再回到这个地方。那么所有这条路径上的点权都可以缩为1点。它形成了一个环 可以通过tarjan求出强连通分量 然后以这些强连通分量建图跑一遍spfa就可以得出答案。。详情代码。</p>
+<span id="more"></span>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//author: CHC</span></span><br><span class="line"><span class="comment">//First Edit Time:	2014-06-10 19:33</span></span><br><span class="line"><span class="comment">//Filename:D:\bc\做题\图论训练\强连通\poj 3592 Instantaneous Transference\1.cpp</span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;map&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;set&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"><span class="type">char</span> map1[<span class="number">50</span>][<span class="number">50</span>];</span><br><span class="line"><span class="type">int</span> map2[<span class="number">50</span>][<span class="number">50</span>];</span><br><span class="line"><span class="type">int</span> val[<span class="number">2500</span>];</span><br><span class="line"><span class="type">int</span> dis[<span class="number">2500</span>];</span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">point</span> &#123;</span><br><span class="line">    <span class="type">int</span> x,y,tx,ty;</span><br><span class="line">&#125;cs[<span class="number">2500</span>];</span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MAXN 2500</span></span><br><span class="line">vector &lt;<span class="type">int</span>&gt; e1[MAXN];</span><br><span class="line">vector &lt;<span class="type">int</span>&gt; e[MAXN];</span><br><span class="line"><span class="type">int</span> dfn[MAXN],low[MAXN],stack[MAXN],bleg[MAXN];</span><br><span class="line"><span class="type">int</span> top,times,tot;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">tarjan_x</span><span class="params">(<span class="type">int</span> u)</span></span>&#123;</span><br><span class="line">    dfn[u]=low[u]=++times;</span><br><span class="line">    stack[++top]=u;</span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;(<span class="type">int</span>)e[u].<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        <span class="type">int</span> v=e[u][i];</span><br><span class="line">        <span class="keyword">if</span>(!dfn[v])&#123;</span><br><span class="line">            <span class="built_in">tarjan_x</span>(v);</span><br><span class="line">            low[u]=<span class="built_in">min</span>(low[u],low[v]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">if</span>(!bleg[v])</span><br><span class="line">            low[u]=<span class="built_in">min</span>(low[u],low[v]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(dfn[u]==low[u])&#123;</span><br><span class="line">        bleg[<span class="number">0</span>]++;</span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">            bleg[stack[top]]=bleg[<span class="number">0</span>];</span><br><span class="line">        &#125;<span class="keyword">while</span>(stack[top--]!=u);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(dfn,<span class="number">0</span>,<span class="built_in">sizeof</span>(dfn));</span><br><span class="line">    <span class="built_in">memset</span>(bleg,<span class="number">0</span>,<span class="built_in">sizeof</span>(bleg));</span><br><span class="line">    top=times=<span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">tarjan</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="built_in">init</span>();</span><br><span class="line">    <span class="comment">//编号从1开始</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=tot;i++)</span><br><span class="line">        <span class="keyword">if</span>(!dfn[i])<span class="built_in">tarjan_x</span>(i);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">bfs</span><span class="params">()</span></span>&#123;</span><br><span class="line">    queue &lt;<span class="type">int</span>&gt; q;</span><br><span class="line">    q.<span class="built_in">push</span>(bleg[<span class="number">1</span>]);</span><br><span class="line">    <span class="built_in">memset</span>(dis,<span class="number">0</span>,<span class="built_in">sizeof</span>(dis));</span><br><span class="line">    dis[bleg[<span class="number">1</span>]]=val[bleg[<span class="number">1</span>]];</span><br><span class="line">    <span class="type">int</span> mm=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(!q.<span class="built_in">empty</span>())&#123;</span><br><span class="line">        <span class="type">int</span> now=q.<span class="built_in">front</span>();</span><br><span class="line">        q.<span class="built_in">pop</span>();</span><br><span class="line">        <span class="keyword">if</span>((mm&lt;dis[now]))mm=dis[now];</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;(<span class="type">int</span>)e1[now].<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="type">int</span> next=e1[now][i];</span><br><span class="line">            <span class="keyword">if</span>(dis[now]+val[next]&gt;dis[next])&#123;</span><br><span class="line">                dis[next]=dis[now]+val[next];</span><br><span class="line">                q.<span class="built_in">push</span>(next);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> mm;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> t,cas=<span class="number">0</span>;</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">&quot;%d&quot;</span>,&amp;t);</span><br><span class="line">    <span class="keyword">while</span>(t--)&#123;</span><br><span class="line">        <span class="type">int</span> n,m;</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;n,&amp;m);</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;MAXN;i++)e[i].<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;MAXN;i++)e1[i].<span class="built_in">clear</span>();</span><br><span class="line">        <span class="built_in">memset</span>(val,<span class="number">0</span>,<span class="built_in">sizeof</span>(val));</span><br><span class="line">        <span class="type">int</span> tt=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot; %c&quot;</span>,&amp;map1[i][j]);</span><br><span class="line">            <span class="keyword">if</span> (map1[i][j]==<span class="string">&#x27;#&#x27;</span>) &#123;</span><br><span class="line">                map2[i][j]=<span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span>(map1[i][j]==<span class="string">&#x27;*&#x27;</span>)&#123;</span><br><span class="line">                map2[i][j]=<span class="number">0</span>;</span><br><span class="line">                cs[tt].x=i;</span><br><span class="line">                cs[tt].y=j;</span><br><span class="line">                ++tt;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                map2[i][j]=map1[i][j]-<span class="string">&#x27;0&#x27;</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;tt;i++)&#123;</span><br><span class="line">            <span class="built_in">scanf</span>(<span class="string">&quot;%d%d&quot;</span>,&amp;cs[i].tx,&amp;cs[i].ty);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;tt;i++)&#123;</span><br><span class="line">            <span class="type">int</span> now=cs[i].x*m+cs[i].y+<span class="number">1</span>;</span><br><span class="line">            <span class="type">int</span> next=cs[i].tx*m+cs[i].ty+<span class="number">1</span>;</span><br><span class="line">            e[now].<span class="built_in">push_back</span>(next);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;m;j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(map2[i][j]==<span class="number">-1</span>)&#123; <span class="keyword">continue</span>; &#125;</span><br><span class="line">            <span class="type">int</span> now=i*m+j+<span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span>(i+<span class="number">1</span>&lt;n&amp;&amp;map2[i+<span class="number">1</span>][j]!=<span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="type">int</span> next=(i+<span class="number">1</span>)*m+j+<span class="number">1</span>;</span><br><span class="line">                e[now].<span class="built_in">push_back</span>(next);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span>(j+<span class="number">1</span>&lt;m&amp;&amp;map2[i][j+<span class="number">1</span>]!=<span class="number">-1</span>)&#123;</span><br><span class="line">                <span class="type">int</span> next=i*m+j+<span class="number">1</span>+<span class="number">1</span>;</span><br><span class="line">                e[now].<span class="built_in">push_back</span>(next);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        tot=n*m;</span><br><span class="line">        <span class="built_in">tarjan</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">1</span>;i&lt;=tot;i++)&#123;</span><br><span class="line">            val[bleg[i]]+=map2[(i<span class="number">-1</span>)/m][(i<span class="number">-1</span>)%m];</span><br><span class="line">            <span class="keyword">for</span>(<span class="type">int</span> j=<span class="number">0</span>;j&lt;(<span class="type">int</span>)e[i].<span class="built_in">size</span>();j++)&#123;</span><br><span class="line">                <span class="type">int</span> v=e[i][j];</span><br><span class="line">                <span class="keyword">if</span>(bleg[i]!=bleg[v])&#123;</span><br><span class="line">                    e1[bleg[i]].<span class="built_in">push_back</span>(bleg[v]);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//printf(&quot;here\n&quot;);</span></span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,<span class="built_in">bfs</span>());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://chchc.me">CHC</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://chchc.me/2014/06/10/poj-3592-Instantaneous-Transference/">https://chchc.me/2014/06/10/poj-3592-Instantaneous-Transference/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://chchc.me" target="_blank">CHC's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%90%9C%E7%B4%A2/">搜索</a><a class="post-meta__tags" href="/tags/%E5%9B%BE%E8%AE%BA/">图论</a><a class="post-meta__tags" href="/tags/%E5%BC%BA%E8%BF%9E%E9%80%9A/">强连通</a><a class="post-meta__tags" href="/tags/%E7%BC%A9%E7%82%B9/">缩点</a></div><div class="post_share"><div class="social-share" data-image="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/gh/overtrue/share.js@master/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2014/05/30/hdu-1102-Constructing-Roads/"><img class="prev-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">hdu 1102 Constructing Roads</div></div></a></div><div class="next-post pull-right"><a href="/2014/06/13/poj-2762-Going-from-u-to-v-or-from-v-to-u/"><img class="next-cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">poj 2762 Going from u to v or from v to u</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2014/07/03/poj-3160-Father-Christmas-flymouse-%E5%BC%BA%E8%BF%9E%E9%80%9A%E7%BC%A9%E7%82%B9+bfs/" title="poj 3160 Father Christmas flymouse 强连通缩点+bfs"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2014-07-03</div><div class="title">poj 3160 Father Christmas flymouse 强连通缩点+bfs</div></div></a></div><div><a href="/2014/07/07/zoj-3795-Grouping-%E5%BC%BA%E8%BF%9E%E9%80%9A%E7%BC%A9%E7%82%B9+%E6%8B%93%E6%89%91%E6%8E%92%E5%BA%8F%E6%9C%80%E9%95%BF%E9%93%BE/" title="zoj 3795 Grouping 强连通缩点+拓扑排序最长链"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2014-07-07</div><div class="title">zoj 3795 Grouping 强连通缩点+拓扑排序最长链</div></div></a></div><div><a href="/2014/05/30/hdu-1102-Constructing-Roads/" title="hdu 1102 Constructing Roads"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2014-05-30</div><div class="title">hdu 1102 Constructing Roads</div></div></a></div><div><a href="/2014/05/17/hdu-1827-Summer-Holiday/" title="hdu 1827 Summer Holiday"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2014-05-17</div><div class="title">hdu 1827 Summer Holiday</div></div></a></div><div><a href="/2014/05/04/hdu-2767-Proving-Equivalences-%E5%BC%BA%E8%BF%9E%E9%80%9A-%E7%BC%A9%E7%82%B9-%E6%B1%82%E5%BA%A6/" title="hdu 2767 Proving Equivalences 强连通 缩点 求度"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2014-05-04</div><div class="title">hdu 2767 Proving Equivalences 强连通 缩点 求度</div></div></a></div><div><a href="/2014/12/02/hdu-3313-Key-Vertex---BFS%E5%BA%94%E7%94%A8/" title="hdu 3313 Key Vertex   BFS应用"><img class="cover" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2014-12-02</div><div class="title">hdu 3313 Key Vertex   BFS应用</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/images/pwa/192.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">CHC</div><div class="author-info__description">『Everything is Possible. But Not Everything is Possible』</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">213</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">163</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">76</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/CHENXCHEN"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/CHENXCHEN" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:chenhuachaoxyz@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2017/07/27/hexo-renderer-markdown-it-plus-plugin-demo/" title="hexo-renderer-markdown-it-plus plugin demo">hexo-renderer-markdown-it-plus plugin demo</a><time datetime="2017-07-27T03:54:13.000Z" title="发表于 2017-07-27 11:54:13">2017-07-27</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2016/07/30/CF-Educational-Codeforces-Round-15/" title="CF Educational Codeforces Round 15">CF Educational Codeforces Round 15</a><time datetime="2016-07-30T12:46:34.000Z" title="发表于 2016-07-30 20:46:34">2016-07-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2016/07/29/HTTPS-%E4%BD%BF%E7%94%A8letsencrypt%E6%90%AD%E5%BB%BASSL%E8%AF%81%E4%B9%A6/" title="[HTTPS]使用letsencrypt搭建SSL证书">[HTTPS]使用letsencrypt搭建SSL证书</a><time datetime="2016-07-29T13:04:07.000Z" title="发表于 2016-07-29 21:04:07">2016-07-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2016/06/23/CentOS7-%E6%90%AD%E5%BB%BAOpenVPN/" title="CentOS7 搭建OpenVPN">CentOS7 搭建OpenVPN</a><time datetime="2016-06-23T15:23:37.000Z" title="发表于 2016-06-23 23:23:37">2016-06-23</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2016/06/09/%E7%BC%96%E8%AF%91USB%E6%97%A0%E7%BA%BF%E9%A9%B1%E5%8A%A88192cu/" title="编译USB无线驱动8192cu">编译USB无线驱动8192cu</a><time datetime="2016-06-08T23:09:15.000Z" title="发表于 2016-06-09 07:09:15">2016-06-09</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2022 By CHC</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly@4.2.2/source/js/utils.min.js"></script><script src="https://cdn.jsdelivr.net/npm/hexo-theme-butterfly@4.2.2/source/js/main.min.js"></script><script src="/third/fancybox/fancybox.umd.js"></script><script src="https://cdn.jsdelivr.net/npm/node-snackbar/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><script>var preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',preloader.endLoading())</script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.min.js"></script><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex@latest/dist/contrib/copy-tex.css"><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'oXOywY5bYG0tHJJ4HsoSNTLR-9Nh9j0Va',
+      appKey: 'ghcCRgDlXaRHA2F6jiqeJ5yS',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !true) {
+  if (true) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://chchc.me/2014/06/10/poj-3592-Instantaneous-Transference/'
+    this.page.identifier = '2014/06/10/poj-3592-Instantaneous-Transference/'
+    this.page.title = 'poj 3592 Instantaneous Transference'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://chchc.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !true) {
+  if (true) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><div class="app-refresh" id="app-refresh"> <div class="app-refresh-wrap"> <label>✨ 网站已更新最新版本 👉</label> <a href="javascript:void(0)" onclick="location.reload()">点击刷新</a> </div></div><script>function showNotification(){if(GLOBAL_CONFIG.Snackbar){var t="light"===document.documentElement.getAttribute("data-theme")?GLOBAL_CONFIG.Snackbar.bgLight:GLOBAL_CONFIG.Snackbar.bgDark,e=GLOBAL_CONFIG.Snackbar.position;Snackbar.show({text:"已更新最新版本",backgroundColor:t,duration:5e5,pos:e,actionText:"点击刷新",actionTextColor:"#fff",onActionClick:function(t){location.reload()}})}else{var o=`top: 0; background: ${"light"===document.documentElement.getAttribute("data-theme")?"#49b1f5":"#1f1f1f"};`;document.getElementById("app-refresh").style.cssText=o}}"serviceWorker"in navigator&&(navigator.serviceWorker.controller&&navigator.serviceWorker.addEventListener("controllerchange",function(){showNotification()}),window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js")}));</script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/canvas-fluttering-ribbon.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
