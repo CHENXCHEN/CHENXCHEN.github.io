@@ -48,8 +48,8 @@
   Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#1f1f1f","bgDark":"#49b1f5","position":"top-right"},
   source: {
     justifiedGallery: {
-      js: 'https://cdn.staticfile.org/flickr-justified-gallery/2.0.0/fjGallery.min.js',
-      css: 'https://cdn.staticfile.org/flickr-justified-gallery/2.0.0/fjGallery.min.css'
+      js: 'https://cdn.staticfile.org/flickr-justified-gallery/2.1.2/fjGallery.min.js',
+      css: 'https://cdn.staticfile.org/flickr-justified-gallery/2.1.2/fjGallery.min.css'
     }
   },
   isPhotoFigcaption: false,
@@ -189,7 +189,7 @@ window.addEventListener('load',preloader.endLoading())</script><div class="js-pj
     }
 
     const loadMermaid = () => {
-      window.loadMermaid ? runMermaid() : getScript('https://cdn.staticfile.org/mermaid/9.1.1/mermaid.min.js').then(runMermaid)
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.staticfile.org/mermaid/9.1.2/mermaid.min.js').then(runMermaid)
     }
 
     window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
